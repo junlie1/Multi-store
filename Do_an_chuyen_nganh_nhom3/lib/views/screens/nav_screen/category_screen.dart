@@ -131,6 +131,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         ),
                         Center(
                           child: Text(subcategory.subCategoryName),
+                        ),
+                        Center(
+                          child: Text("test")
                         )
                       ],
                     );
