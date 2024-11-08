@@ -1,5 +1,6 @@
 import 'package:do_an_chuyen_nganh_nhom3/controllers/category_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/models/category.dart';
+import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/inner_category_screen.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +50,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                 );
               }
               else {
-                final categories = snapshot.data!; //Data vẫn là Json q
+                final categories = snapshot.data!; //Data vẫn là Json
                 return GridView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -61,11 +62,20 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     ),
                     itemBuilder: (context,index) {
                       final category = categories[index];
-                      return Column(
-                        children: [
-                          Image.network(height: 60, width: 60, category.image),
-                          Text(category.name, style: TextStyle(fontWeight: FontWeight.bold),),
-                        ],
+                      return InkWell(
+  //Goi sự kiện sang
+  //Detail/screen/inner_category
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return InnerCategoryScreen(category: category,);
+                          }));
+                        },
+                        child: Column(
+                          children: [
+                            Image.network(height: 60, width: 60, category.image),
+                            Text(category.name, style: TextStyle(fontWeight: FontWeight.bold),),
+                          ],
+                        ),
                       );
                     }
                 );

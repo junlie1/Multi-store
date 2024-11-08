@@ -2,6 +2,7 @@ import 'package:do_an_chuyen_nganh_nhom3/controllers/category_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/controllers/subcategory_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/models/category.dart';
 import 'package:do_an_chuyen_nganh_nhom3/models/sub_category.dart';
+import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/widgets/subcategory_tile_widget.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/header_widget.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
     // TODO: implement initState
     super.initState();
     futureCategories = CategoryControllers().loadCategories();
+
+//Đặt màn hình mặc định cho Category
+    futureCategories.then((categories) {
+      for(var category in categories) {
+        if(category.name == "Fashions") {
+          setState(() {
+            _selectedCategory = category;
+          });
+          _loadSubcategories(category.name);
+        }
+      }
+    });
   }
 
   //Hàm loadCategory:
@@ -45,7 +58,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       ),
       body: Row(
         children: [
-//Bên trái
+/*Bên trái*/
           Expanded(
             flex: 2,
             child: Container(
@@ -64,6 +77,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 else {
                   final categories = snapshot.data!;
                   return ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
                     itemCount: categories.length,
                     itemBuilder: (context, index){
                       final category = categories[index];
@@ -89,58 +103,54 @@ class _CategoryScreenState extends State<CategoryScreen> {
             ),
           ),
 
-//Bên phải
+/*Bên phải*/
           Expanded(
             flex:5,
-            child: _selectedCategory != null ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(_selectedCategory!.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 150,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(_selectedCategory!.banner),
-                        fit: BoxFit.cover
-                      ),
-                    ),
-                  ),
-                ),
-                GridView.builder(
-                  shrinkWrap: true,
-                  itemCount: _subcategories.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3,mainAxisSpacing: 4, crossAxisSpacing: 8),
-                  itemBuilder: (context,index) {
-                    final subcategory = _subcategories[index];
-                    return Column(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          child: Center(
-                            child: Image.network(
-                              subcategory.image,
-                              fit: BoxFit.cover,
+            child: _selectedCategory != null
+  /*Hiển thị Danh sách gồm banner và subcategory name*/
+                ? SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(_selectedCategory!.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            height: 150,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: NetworkImage(_selectedCategory!.banner),
+                                fit: BoxFit.cover
+                              ),
                             ),
                           ),
                         ),
-                        Center(
-                          child: Text(subcategory.subCategoryName),
-                        ),
-                        Center(
-                          child: Text("test")
+                        _subcategories.isNotEmpty
+                            ? GridView.builder(
+                          shrinkWrap: true,
+                          itemCount: _subcategories.length,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 4,
+                            crossAxisSpacing: 6,
+                            childAspectRatio: 2/3
+                          ),
+                          itemBuilder: (context,index) {
+                            final subcategory = _subcategories[index];
+                            return SubcategoryTileWidget(image: subcategory.image, title: subcategory.subCategoryName);
+                          }
+                        )
+                            : Center(
+                          child: Text("Không có danh mục sản phẩm cho ${_selectedCategory!.name}"),
                         )
                       ],
-                    );
-                  }
-                )
-              ],
-            ) : Container(),
+              ),
+            )
+                : Container(),
           )
         ],
       ),

@@ -15,6 +15,9 @@ void managerHttpResponse({
     case 400:
       showSnackBar(context, jsonDecode(response.body)['message']);
       break;
+    case 404:
+      showSnackBar(context, jsonDecode(response.body)['message']);
+      break;
     case 500:
       showSnackBar(context, jsonDecode(response.body)['error']);
       break;
@@ -26,6 +29,9 @@ void managerHttpResponse({
 void showSnackBar(BuildContext context, String title) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
+      margin: EdgeInsets.all(15),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.grey,
       content: Text(
         title
       ),

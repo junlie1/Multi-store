@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
+        android:enableOnBackInvokedCallback="true"
         android:label="do_an_chuyen_nganh_nhom3"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
