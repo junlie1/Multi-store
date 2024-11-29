@@ -26,7 +26,7 @@ class InnerHeaderWidget extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.arrow_back,
                     color: Colors.white,
                   )
@@ -42,11 +42,11 @@ class InnerHeaderWidget extends StatelessWidget {
               child: TextField(
                 decoration: InputDecoration(
                     hintText: "Search here",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 14,
                         color: Colors.black
                     ),
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 16
                     ),
@@ -72,7 +72,7 @@ class InnerHeaderWidget extends StatelessWidget {
                 child: Ink(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/icons/bell.png")
                       )
@@ -92,7 +92,7 @@ class InnerHeaderWidget extends StatelessWidget {
                 child: Ink(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/icons/message.png")
                       )

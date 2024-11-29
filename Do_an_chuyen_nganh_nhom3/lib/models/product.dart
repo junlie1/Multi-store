@@ -12,6 +12,8 @@ class Product {
   final String fullName;
   final String subCategory;
   final List<String> images;
+  final double averageRating;
+  final int totalRatings;
 
   Product(
       {required this.id,
@@ -23,7 +25,10 @@ class Product {
         required this.vendorId,
         required this.fullName,
         required this.subCategory,
-        required this.images});
+        required this.images,
+        required this.averageRating,
+        required this.totalRatings
+      });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -36,7 +41,9 @@ class Product {
       'vendorId': vendorId,
       'fullName': fullName,
       'subCategory': subCategory,
-      'images': images
+      'images': images,
+      'averageRating': averageRating,
+      'totalRatings': totalRatings
     };
   }
 
@@ -54,6 +61,10 @@ class Product {
       images: map['images'] != null
           ? List<String>.from((map['images'] as List<dynamic>).map((e) => e.toString()))
           : <String>[],
+      averageRating: (map['averageRating'] is int
+          ? (map['averageRating'] as int).toDouble()
+          : map['averageRating'] as double),
+      totalRatings: map['totalRatings'] as int,
     );
   }
 

@@ -40,7 +40,7 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 20),
-          child: InnerHeaderWidget()
+          child: const InnerHeaderWidget()
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,7 +50,7 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
             Center(
               child: Text(
                 "Sản phẩm con của danh mục ${widget.category.name}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold
                 ),
@@ -60,7 +60,7 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
 /* Hiển thị subcategory */
             FutureBuilder(future: _subCategories, builder: (context,snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
               else if(snapshot.hasError) {
                 return Center(
@@ -71,7 +71,7 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
               }
               //Không có dữ liệu
               else if(!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(
+                return const Center(
                   child: Text(
                       "Không có Categories nào trong database"
                   ),
@@ -92,7 +92,7 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
 
         /*Tạo khoảng cách giữa các Row*/
                       return Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(8.0),
                         child: Row(
         /* tạo một hàng các ô danh mục con */
                           children: subcategories
@@ -112,19 +112,19 @@ class _InnerCategoryScreenState extends State<InnerCategoryScreen> {
                 );
               }
             }),
-            ReusableTextWidget(title: "Popular Product", subtitle: "View all"),
+            const ReusableTextWidget(title: "Popular Product", subtitle: "View all"),
             FutureBuilder(
                 future: futureProducts,
                 builder: (context,snapshot) {
                   if(snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
                   else if(snapshot.hasError) {
                     print(snapshot.error);
                     return Center(child: Text("Lỗi: ${snapshot.error}"),);
                   }
                   else if(!snapshot.hasData || snapshot.data!.isEmpty){
-                    return Center(child: Text("Không có sản phẩm"),);
+                    return const Center(child: Text("Không có sản phẩm"),);
                   }
                   else {
                     final products = snapshot.data;

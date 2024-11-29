@@ -1,3 +1,4 @@
+import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 
 class HeaderWidget extends StatelessWidget {
@@ -24,29 +25,38 @@ class HeaderWidget extends StatelessWidget {
             child: SizedBox(
               width: 260,
               height: 50,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: "Search here",
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchWidget()));
+                },
+                child: AbsorbPointer(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search here",
+                      hintStyle: const TextStyle(fontSize: 14, color: Colors.black),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                      prefixIcon: Image.asset(
+                        "assets/icons/searc1.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                      suffixIcon: Image.asset(
+                        "assets/icons/cam.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
                   ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 16
-                  ),
-                  prefixIcon: Image.asset("assets/icons/searc1.png",width: 30,height: 30,),
-                  suffixIcon: Image.asset("assets/icons/cam.png",width: 30,height: 30,),
-                  fillColor: Colors.white,
-                  filled: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30)
-                  )
                 ),
               ),
             ),
           ),
-      /* Cái Chuông */
+          /* Cái Chuông */
           Positioned(
             left: 300,
             top: 68,
@@ -57,7 +67,7 @@ class HeaderWidget extends StatelessWidget {
                 child: Ink(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage("assets/icons/bell.png")
                     )
@@ -77,7 +87,7 @@ class HeaderWidget extends StatelessWidget {
                 child: Ink(
                   width: 35,
                   height: 35,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage("assets/icons/message.png")
                       )

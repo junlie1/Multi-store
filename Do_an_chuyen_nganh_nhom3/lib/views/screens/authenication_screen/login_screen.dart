@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             "SIGN IN",
                             style: TextStyle(
                               fontSize: 22,
@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
        // Trường nhập Email
                           TextFormField(
                             controller: emailController,
@@ -94,20 +94,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               return null;
                             },
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.person_outline, color: Colors.purple),
+                              prefixIcon: const Icon(Icons.person_outline, color: Colors.purple),
                               labelText: 'Email',
-                              labelStyle: TextStyle(color: Colors.purple),
+                              labelStyle: const TextStyle(color: Colors.purple),
                               enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.purple),
+                                borderSide: const BorderSide(color: Colors.purple),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.purple),
+                                borderSide: const BorderSide(color: Colors.purple),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                             ),
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
        // Trường nhập Mật khẩu
                           Obx(
                                 () => TextFormField(
@@ -120,9 +120,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                               obscureText: isObsecure.value,
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.lock_outline, color: Colors.purple),
+                                prefixIcon: const Icon(Icons.lock_outline, color: Colors.purple),
                                 labelText: 'Password',
-                                labelStyle: TextStyle(color: Colors.purple),
+                                labelStyle: const TextStyle(color: Colors.purple),
                                 suffixIcon: Obx(() => GestureDetector(
                                   onTap: () {
                                     isObsecure.value = !isObsecure.value;
@@ -133,17 +133,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 )),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
        //Quên mật khẩu?
                           Align(
                             alignment: Alignment.centerRight,
@@ -155,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
         //Button SignIn
                           Center(
                             child: Column(
@@ -167,12 +167,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                     }
                                   },
                                   child: Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                                    padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                                     decoration: BoxDecoration(
                                       color: Colors.purple.withOpacity(0.8),
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
-                                    child: isLoading? CircularProgressIndicator(color: Colors.white,) : Text(
+                                    child: isLoading? const CircularProgressIndicator(color: Colors.white,) : const Text(
                                       "Login",
                                       style: TextStyle(fontSize: 18, color: Colors.white),
                                     ),
@@ -184,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const Text("Don't have an account?"),
                                     TextButton(
                                       onPressed: () {
-                                        Get.to(RegisterScreen());
+                                        Get.to(const RegisterScreen());
                                       },
            //Sang trang SignUp
                                       child: const Text(
@@ -200,32 +200,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 10),
-                          Center(
-                            child: const Text(
+                          const SizedBox(height: 10),
+                          const Center(
+                            child: Text(
                               "Or continue with",
                               style: TextStyle(color: Colors.grey, fontSize: 16),
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.g_mobiledata, size: 40, color: Colors.purple),
+                                icon: const Icon(Icons.g_mobiledata, size: 40, color: Colors.purple),
                                 onPressed: () {},
                               ),
                               IconButton(
-                                icon: Icon(Icons.facebook, size: 40, color: Colors.purple),
+                                icon: const Icon(Icons.facebook, size: 40, color: Colors.purple),
                                 onPressed: () {},
                               ),
                               IconButton(
-                                icon: Icon(Icons.phone, size: 40, color: Colors.purple),
+                                icon: const Icon(Icons.phone, size: 40, color: Colors.purple),
                                 onPressed: () {},
                               ),
                             ],
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                         ],
                       ),
                     ),

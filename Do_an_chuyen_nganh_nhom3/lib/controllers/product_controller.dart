@@ -53,4 +53,26 @@ class ProductController {
       throw Exception("Error loading product: $e");
     }
   }
+
+  Future<Product> getProductById({required String id}) async {
+    try {
+      http.Response response = await http.get(
+          Uri.parse("$uri/api/product/$id"),
+          headers: <String,String> {
+            "Content-Type": 'application/json; charset=UTF-8'
+          }
+      );
+      print(response.body);
+      if(response.statusCode == 200) {
+        final Product product = jsonDecode(response.body);
+        return product;
+      }
+      else {
+        throw Exception("Fail to load Popular Product");
+      }
+    }
+    catch(e) {
+      throw Exception("Error loading product: $e");
+    }
+  }
 }

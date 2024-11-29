@@ -1,5 +1,7 @@
+import 'package:do_an_chuyen_nganh_nhom3/controllers/cart_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/controllers/order_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/provider/cart_provider.dart';
+import 'package:do_an_chuyen_nganh_nhom3/provider/order_provider.dart';
 import 'package:do_an_chuyen_nganh_nhom3/provider/user_provider.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/shipping_address_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,23 +11,25 @@ class CheckoutScreen extends ConsumerStatefulWidget {
   const CheckoutScreen({super.key});
 
   @override
-  _CheckoutScreenState createState() => _CheckoutScreenState();
+  ConsumerState<CheckoutScreen> createState() => _CheckoutScreenState();
 }
 
 class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
   String selectedPaymentMethod = "Momo";
   final OrderController _orderController = OrderController();
+  final CartController _cartController = CartController();
 
   @override
   Widget build(BuildContext context) {
-    final cartData = ref.read(cartProvider);
-    final _cartProvider = ref.read(cartProvider.notifier);
+    final cartData = ref.read(cartProvider); // Dữ liệu từ provider
+    final cartNotifier = ref.read(cartProvider.notifier);
     final user = ref.watch(userProvider);
+    final orders = ref.read(orderProvider);
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Checkout"
         ),
       ),
@@ -41,7 +45,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               InkWell(
                 onTap: () {
                   Navigator.push(context, MaterialPageRoute(builder: (context){
-                    return ShippingAddressScreen();
+                    return const ShippingAddressScreen();
                   }));
                 },
                 child: SizedBox(
@@ -50,7 +54,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                   child: Stack(
                     clipBehavior: Clip.none,
                     children: [
-      //Khung chứa
+      //Khung chứa địa chỉ
                       Positioned(
                         left: 0,
                         top: 0,
@@ -80,7 +84,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                 top: -1,
                                 left: -1,
                                 child: SizedBox(
-                                  width: 219,
+                                  width: 300,
                                   child: Row(
                                     children: [
                                       Column(
@@ -89,7 +93,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                           const Align(
                                             alignment: Alignment.centerLeft,
                                             child: SizedBox(
-                                              width: 114,
+                                              width: 100,
                                               child: Text(
                                                 'Địa chỉ',
                                                 style: TextStyle(
@@ -108,13 +112,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                             child: user!.city.isNotEmpty
                                                 ? Text(
                                                 user.city,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.blue
                                               ),
                                             )
-                                                :Text(
+                                                :const Text(
                                               'Việt Nam',
                                               style: TextStyle(
                                                 fontSize: 14,
@@ -126,11 +130,11 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: user.locality.isNotEmpty
-                                                ?Text(user.locality,style: TextStyle(color: Colors.black45),)
-                                                : Text(
+                                                ?Text(user.locality,style: const TextStyle(color: Colors.black45),)
+                                                : const Text(
                                                   'Enter locality',
                                                   style: TextStyle(
-                                                    color: const Color(0xFF7F808C),
+                                                    color: Color(0xFF7F808C),
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 12,
                                                   ),
@@ -138,7 +142,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                                           )
                                         ],
                                       ),
-                                      Text("SĐT: "),
+                                      const Text("SĐT: "),
                                       Text(user.phoneNumber),
 
                                     ],
@@ -204,9 +208,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 ),
               ),
 
-              SizedBox(height: 10,),
+              const SizedBox(height: 10,),
 /*Text*/
-              Text(
+              const Text(
                 "Your Item",
                 style: TextStyle(
                   fontSize: 18,
@@ -230,12 +234,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                       height: 91,
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        border: Border.all(color: Color(0xEAB7C8FF)),
+                        border: Border.all(color: const Color(0xEAB7C8FF)),
                         borderRadius: BorderRadius.circular(20)
                       ),
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 78,
                             height: 78,
                             child: Image.network(cartItem.image[0]),
@@ -248,14 +252,14 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                               children: [
                                 Text(
                                   cartItem.productName,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold
                                   ),
                                 ),
                                 Text(
                                   cartItem.category,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black45
@@ -264,13 +268,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                               ],
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Padding(
                             padding: const EdgeInsets.only(right: 10),
                             child: Text(
                               "\$${cartItem.productPrice.toString()} x ${cartItem.quantity}",
                               textAlign: TextAlign.right,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.red
@@ -285,9 +289,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               )
             ),
 
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
 /*Chọn cách thức chuyển tiền*/
-            Text(
+            const Text(
               "Choose Payment Method",
               style: TextStyle(
                 fontSize: 18,
@@ -296,7 +300,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
             ),
             
             RadioListTile<String>(
-              title: Text(
+              title: const Text(
                 "Momo",
                 style: TextStyle(
                     fontSize: 18
@@ -311,7 +315,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               }
             ),
               RadioListTile<String>(
-                  title: Text(
+                  title: const Text(
                     "Cash on delivery",
                     style: TextStyle(
                         fontSize: 18
@@ -330,19 +334,23 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         ),
       ),
 /*Kiểm tra đã có địa chỉ chưa?*/
-      bottomNavigationBar: user!.city.isEmpty
+      bottomNavigationBar: user.city.isEmpty
           ? TextButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context){
-            return ShippingAddressScreen();
+            return const ShippingAddressScreen();
           }));
         },
-        child: Text("Hãy nhập địa chỉ của bạn",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+        child: const Text("Hãy nhập địa chỉ của bạn",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
       )
           :InkWell(
         onTap: () async{
           if(selectedPaymentMethod == "Momo") {
             print("aaaaa");
+            for(var order in orders) {
+              final orderId = order.id;
+              await _orderController.payWithMomo(orderId);
+            }
           }
           else{
             print("đã ấn cash on delivery");
@@ -350,7 +358,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
 //elements: là danh sách (hoặc element) chứa các phần tử mà bạn muốn thực hiện thao tác trên từng phần tử.
 // action: là hàm hoặc biểu thức trả về Future sẽ được thực hiện trên mỗi phần tử của element.
             try {
-              await Future.forEach(_cartProvider.getCartItems.entries, (entry) async {
+              await Future.forEach(cartNotifier.getCartItems.entries, (entry) async {
                 var item = entry.value;
                 await _orderController.uploadOrders(
                     id: '',
@@ -360,6 +368,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     locality: ref.read(userProvider)!.locality,
                     phoneNumber: ref.read(userProvider)!.phoneNumber,
                     productName: item.productName,
+                    productId: item.productId,
                     productPrice: item.productPrice,
                     quantity: item.quantity,
                     category: item.category,
@@ -367,9 +376,13 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                     buyerId: ref.read(userProvider)!.id,
                     vendorId: item.vendorId,
                     processing: true,
+                    shipping: false,
                     delivered: false,
+                    isPaid: false,
                     context: context
                 );
+              }).whenComplete(() async {
+                await _cartController.removeCartAfterOrder(userId:user.id, context: context);
               });
             } catch (e) {
               // In ra lỗi để giúp bạn kiểm tra và sửa lỗi
@@ -392,7 +405,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               onPressed: () {},
               child: Text(
                 selectedPaymentMethod == "Momo" ? "Pay now" : "Place order",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white
                 ),

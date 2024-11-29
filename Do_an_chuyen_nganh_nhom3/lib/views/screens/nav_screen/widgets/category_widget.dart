@@ -1,61 +1,55 @@
 import 'package:do_an_chuyen_nganh_nhom3/controllers/category_controller.dart';
-import 'package:do_an_chuyen_nganh_nhom3/models/category.dart';
+import 'package:do_an_chuyen_nganh_nhom3/provider/category_provider.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/inner_category_screen.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CategoryWidget extends StatefulWidget {
+class CategoryWidget extends ConsumerStatefulWidget {
   const CategoryWidget({super.key});
 
   @override
-  State<CategoryWidget> createState() => _CategoryWidgetState();
+  ConsumerState<CategoryWidget> createState() => _CategoryWidgetState();
 }
 
-class _CategoryWidgetState extends State<CategoryWidget> {
-  late Future<List<Category>> futureCategories;
+class _CategoryWidgetState extends ConsumerState<CategoryWidget> {
   @override
   //initState sử dụng để thiết lập trạng thái ban đầu của widget hoặc khởi tạo các tác vụ bất đồng bộ
   void initState() {
     // TODO: implement initState
     super.initState();
-    futureCategories = CategoryControllers().loadCategories();
+    _fetchCategories();
   }
+
+  Future<void> _fetchCategories() async{
+    final CategoryControllers categoryControllers = CategoryControllers();
+    try {
+      final categories = await categoryControllers.loadCategories();
+      ref.read(categoryProvider.notifier).setCategories(categories);
+    }
+    catch(e) {
+      print("Lỗi $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final categories = ref.watch(categoryProvider);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         child: Column(
           children: [
-            ReusableTextWidget(title: "Categories", subtitle: "View all"),
+            const ReusableTextWidget(title: "Categories", subtitle: "View all"),
 
   //Danh sách categories
-            FutureBuilder(future: futureCategories, builder: (context,snapshot) {
-              if(snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator();
-              }
-              else if(snapshot.hasError) {
-                return Center(
-                  child: Text(
-                      "Error: ${snapshot.error}"
-                  ),
-                );
-              }
-              //Không có dữ liệu
-              else if(!snapshot.hasData || snapshot.data!.isEmpty) {
-                return Center(
-                  child: Text(
-                      "Không có Categories nào trong database"
-                  ),
-                );
-              }
-              else {
-                final categories = snapshot.data!; //Data vẫn là Json
-                return GridView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+            Column(
+              children: [
+                GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: categories.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       crossAxisSpacing: 8,
                       mainAxisSpacing: 8,
@@ -63,8 +57,8 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     itemBuilder: (context,index) {
                       final category = categories[index];
                       return InkWell(
-  //Goi sự kiện sang
-  //Detail/screen/inner_category
+                        //Goi sự kiện sang
+                        //Detail/screen/inner_category
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
                             return InnerCategoryScreen(category: category,);
@@ -73,14 +67,14 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                         child: Column(
                           children: [
                             Image.network(height: 60, width: 60, category.image),
-                            Text(category.name, style: TextStyle(fontWeight: FontWeight.bold),),
+                            Text(category.name, style: const TextStyle(fontWeight: FontWeight.bold),),
                           ],
                         ),
                       );
                     }
-                );
-              }
-            })
+                )
+              ],
+            )
           ],
         ),
       ),

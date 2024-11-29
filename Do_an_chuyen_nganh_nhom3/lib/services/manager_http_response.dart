@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 void managerHttpResponse({
@@ -29,7 +27,7 @@ void managerHttpResponse({
 void showSnackBar(BuildContext context, String title) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      margin: EdgeInsets.all(15),
+      margin: const EdgeInsets.all(15),
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.grey,
       content: Text(

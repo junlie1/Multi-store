@@ -51,6 +51,10 @@ dependencies:
   firebase_storage: ^12.3.1
   firebase_core: ^3.5.0
   flutter_riverpod: ^2.5.3
+  url_launcher: ^6.3.1
+  custom_rating_bar: ^3.0.0
+#  flutter_stripe: ^11.3.0
+
 
 dev_dependencies:
   flutter_test:

@@ -11,7 +11,7 @@ class SubcategoryTileWidget extends StatelessWidget {
     return Column(
       children: [
   /*Ảnh*/
-        Container(
+        SizedBox(
           width: 80,
           height: 80,
           child: ClipRRect(
@@ -19,14 +19,14 @@ class SubcategoryTileWidget extends StatelessWidget {
             child: Image.network(image,fit: BoxFit.cover,),
           ),
         ),
-  SizedBox(height: 10,),
+  const SizedBox(height: 10,),
   /* Tiêu đề */
         SizedBox(
           height: 50,
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold
             ),

@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   //Chạy flutter app trong ProviderScropr để quản lý trạng thái User
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 /* Hàm check thông tin User
@@ -44,10 +44,10 @@ class MyApp extends ConsumerWidget {
         future: _checkTokenUser(ref),
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
           final user = ref.watch(userProvider);
-          return user != null ? MainScreen() : LoginScreen();
+          return user != null ? const MainScreen() : const LoginScreen();
         }
       ),
     );

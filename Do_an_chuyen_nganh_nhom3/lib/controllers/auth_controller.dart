@@ -1,13 +1,11 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:do_an_chuyen_nganh_nhom3/global_varibles.dart';
 import 'package:do_an_chuyen_nganh_nhom3/models/user.dart';
 import 'package:do_an_chuyen_nganh_nhom3/provider/user_provider.dart';
 import 'package:do_an_chuyen_nganh_nhom3/services/manager_http_response.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/authenication_screen/login_screen.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/main_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -95,7 +93,7 @@ class AuthController {
       predicate là một hàm bool Function(Route) trả về giá trị true hoặc false */
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => MainScreen()), (route)=> false
+            MaterialPageRoute(builder: (context) => const MainScreen()), (route)=> false
         );
           showSnackBar(context, "Bạn đã đăng nhập thành công");
       });
@@ -106,7 +104,7 @@ class AuthController {
   }
 
   //SignOut User
-  Future<void> signOutUser({required context}) async {
+  Future<void> signOutUser({required context, required WidgetRef ref}) async {
     try{
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.remove('auth_token');
@@ -118,7 +116,7 @@ class AuthController {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) {
-          return LoginScreen();
+          return const LoginScreen();
         }),
           (route) => false
       );

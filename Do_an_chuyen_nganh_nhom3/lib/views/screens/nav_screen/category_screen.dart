@@ -4,7 +4,6 @@ import 'package:do_an_chuyen_nganh_nhom3/models/category.dart';
 import 'package:do_an_chuyen_nganh_nhom3/models/sub_category.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/widgets/subcategory_tile_widget.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/header_widget.dart';
-import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/widgets/reusable_text_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -54,7 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(MediaQuery.of(context).size.height * 20),
-          child: HeaderWidget()
+          child: const HeaderWidget()
       ),
       body: Row(
         children: [
@@ -65,7 +64,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               color: Colors.black12,
               child: FutureBuilder(future: futureCategories, builder: (context,snapshot) {
                 if(snapshot.connectionState == ConnectionState) {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
                 else if (snapshot.hasError) {
                   return Center(
@@ -77,7 +76,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 else {
                   final categories = snapshot.data!;
                   return ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: categories.length,
                     itemBuilder: (context, index){
                       final category = categories[index];
@@ -114,7 +113,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                     children: [
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(_selectedCategory!.name, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
+                          child: Text(_selectedCategory!.name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -132,12 +131,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             ? GridView.builder(
                           shrinkWrap: true,
                           itemCount: _subcategories.length,
-                          physics: NeverScrollableScrollPhysics(),
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             mainAxisSpacing: 4,
                             crossAxisSpacing: 6,
-                            childAspectRatio: 2/3
+                            childAspectRatio: 1.75/3
                           ),
                           itemBuilder: (context,index) {
                             final subcategory = _subcategories[index];

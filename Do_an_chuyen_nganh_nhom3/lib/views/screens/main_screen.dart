@@ -15,13 +15,13 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _pageIndex = 0;
-  List<Widget> _page = [
-    HomeScreen(),
-    FavouriteScreen(),
-    CategoryScreen(),
-    StoresScreen(),
-    CartScreen(),
-    AccountScreen()
+  final List<Widget> _page = [
+    const HomeScreen(),
+    const FavouriteScreen(),
+    const CategoryScreen(),
+    const StoresScreen(),
+    const CartScreen(),
+    const AccountScreen()
   ];
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _MainScreenState extends State<MainScreen> {
               icon: Image.asset("assets/icons/love.png",width: 30,),
               label: "Favourite"
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.category),
               label: "Categories"
           ),

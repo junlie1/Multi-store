@@ -11,7 +11,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   var isObsecure = true.obs;
   final TextEditingController emailController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
@@ -71,7 +71,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "SIGN UP",
                               style: TextStyle(
                                 fontSize: 22,
@@ -79,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
         // Trường nhập Email
                             TextFormField(
                               controller: emailController,
@@ -92,20 +92,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.person_outline, color: Colors.purple),
+                                prefixIcon: const Icon(Icons.person_outline, color: Colors.purple),
                                 labelText: 'Email',
-                                labelStyle: TextStyle(color: Colors.purple),
+                                labelStyle: const TextStyle(color: Colors.purple),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
         //Trường nhập fullName
                             TextFormField(
                               controller: fullNameController,
@@ -116,20 +116,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return null;
                               },
                               decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.person_outline, color: Colors.purple),
+                                prefixIcon: const Icon(Icons.person_outline, color: Colors.purple),
                                 labelText: 'Full Name',
-                                labelStyle: TextStyle(color: Colors.purple),
+                                labelStyle: const TextStyle(color: Colors.purple),
                                 enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.purple),
+                                  borderSide: const BorderSide(color: Colors.purple),
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
         // Trường nhập Password
                             Obx( () => TextFormField(
                                 controller: passwordController,
@@ -141,9 +141,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 },
                                 obscureText: isObsecure.value,
                                 decoration: InputDecoration(
-                                  prefixIcon: Icon(Icons.lock_outline, color: Colors.purple),
+                                  prefixIcon: const Icon(Icons.lock_outline, color: Colors.purple),
                                   labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.purple),
+                                  labelStyle: const TextStyle(color: Colors.purple),
                                   suffixIcon: Obx(() => GestureDetector(
                                     onTap: () {
                                       isObsecure.value = !isObsecure.value;
@@ -154,17 +154,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     ),
                                   )),
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.purple),
+                                    borderSide: const BorderSide(color: Colors.purple),
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
                                   focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.purple),
+                                    borderSide: const BorderSide(color: Colors.purple),
                                     borderRadius: BorderRadius.circular(12.0),
                                   ),
                                 ),
                               ),
                             ),
-                            SizedBox(height: 20),
+                            const SizedBox(height: 20),
             //Button SignUp
                             Center(
                               child: Column(
@@ -176,12 +176,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       }
                                     },
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                                padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                                 decoration: BoxDecoration(
                                   color: Colors.purple.withOpacity(0.8),
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                child: _isLoading? CircularProgressIndicator(color: Colors.white,) : Text(
+                                child: _isLoading? const CircularProgressIndicator(color: Colors.white,) : const Text(
                                   "Sign up",
                                   style: TextStyle(fontSize: 18, color: Colors.white),
                                 ),
@@ -193,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       const Text("Bạn đã có tài khoản?"),
                                       TextButton(
                                         onPressed: () {
-                                          Get.to(LoginScreen());
+                                          Get.to(const LoginScreen());
                                         },
                                         child: const Text(
                                           "Login here",

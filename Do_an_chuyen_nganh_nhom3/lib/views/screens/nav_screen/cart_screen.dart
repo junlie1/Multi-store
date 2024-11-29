@@ -1,11 +1,12 @@
+import 'package:do_an_chuyen_nganh_nhom3/controllers/cart_controller.dart';
 import 'package:do_an_chuyen_nganh_nhom3/provider/cart_provider.dart';
+import 'package:do_an_chuyen_nganh_nhom3/provider/user_provider.dart';
+import 'package:do_an_chuyen_nganh_nhom3/services/manager_http_response.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/detail/screens/checkout_screen.dart';
 import 'package:do_an_chuyen_nganh_nhom3/views/screens/main_screen.dart';
-import 'package:do_an_chuyen_nganh_nhom3/views/screens/nav_screen/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 
 class CartScreen extends ConsumerStatefulWidget {
   const CartScreen({super.key});
@@ -15,17 +16,33 @@ class CartScreen extends ConsumerStatefulWidget {
 }
 
 class _CartScreenState extends ConsumerState<CartScreen> {
+  bool _isInitialized = false;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      final userId = ref.read(userProvider)!.id;
+      if (userId.isNotEmpty) {
+        ref.read(cartProvider.notifier).fetchCartItems(userId); // Lấy dữ liệu giỏ hàng
+      }
+      _isInitialized = true;
+    }
+  }
   @override
   Widget build(BuildContext context) {
 
     final cartData = ref.watch(cartProvider);
-    final _cartProvider = ref.read(cartProvider.notifier);
+    final _cartProvider  = ref.read(cartProvider.notifier);
     final totalAmount = ref.read(cartProvider.notifier).calculateTotalAmount();
+    final userId = ref.read(userProvider)!.id;
+    print("userId: $userId");
+    final CartController cartController = CartController();
+
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "My cart",
           style: TextStyle(
             color: Colors.lightBlueAccent,
@@ -39,7 +56,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               "Giỏ hàng đang rỗng\n Chọn sản phẩm bằng cách ấn\n Xem sản phẩm ở dưới",
               style: TextStyle(
                 fontSize: 15,
@@ -50,10 +67,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             TextButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return MainScreen();
+                  return const MainScreen();
                 }));
               },
-              child: Text(
+              child: const Text(
                 "Xem sản phẩm"
               )
             )
@@ -102,7 +119,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                       top: 14,
                       child: Text(
                         'You Have ${cartData.length} items',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -136,21 +153,21 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                           children: [
                             Text(
                               cartItem.productName,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
                               ),
                             ),
                             Text(
                               cartItem.category,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.blueGrey
                               ),
                             ),
                             Text(
                               "\$ ${cartItem.productPrice.toStringAsFixed(2)}",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.deepOrangeAccent
                               ),
@@ -172,14 +189,14 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                         _cartProvider.removeCartItem(cartItem.productId);
                                       }
                                     },
-                                    icon: Icon(
+                                    icon: const Icon(
                                       CupertinoIcons.minus,
                                       color: Colors.white,
                                     )
                                   ),
                                   Text(
                                     cartItem.quantity.toStringAsFixed(0),
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white
                                     ),
                                   ),
@@ -187,7 +204,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                                       onPressed: () {
                                         _cartProvider.incrementCartItem(cartItem.productId);
                                       },
-                                      icon: Icon(
+                                      icon: const Icon(
                                         CupertinoIcons.plus,
                                         color: Colors.white,
                                       )
@@ -197,9 +214,10 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  _cartProvider.removeCartItem(cartItem.productId);
+                                  cartController.removeCartItem(userId, cartItem.productId);
+                                  showSnackBar(context, "Bạn đã xóa sản phẩm ${cartItem.productName} khỏi giỏ hàng");
                                 },
-                                icon: Icon(
+                                icon: const Icon(
                                   CupertinoIcons.delete,
                                   color: Colors.black,
                                 )
@@ -219,7 +237,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       bottomNavigationBar: Container(
         width: 100,
         height: 80,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.blue
         ),
         child: Row(
@@ -227,8 +245,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
           children: [
             Row(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(
                     textAlign: TextAlign.center,
                     "Subtotal:",
@@ -240,7 +258,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                 ),
                 Text(
                   "\$${totalAmount.toString()}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 20
                   ),
@@ -260,7 +278,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   ? null
                   : () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      return CheckoutScreen();
+                      return const CheckoutScreen();
                     }));
                   },
               style: ButtonStyle(
@@ -270,7 +288,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                   },
                 ),
               ),
-              child: Text(
+              child: const Text(
                 "Check out",
                 style: TextStyle(
                   color: Colors.white,

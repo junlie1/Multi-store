@@ -7,6 +7,7 @@ class Order {
   final String city;
   final String locality;
   final String phoneNumber;
+  final String productId;
   final String productName;
   final int productPrice;
   final int quantity;
@@ -15,7 +16,9 @@ class Order {
   final String buyerId;
   final String vendorId;
   final bool processing;
+  final bool shipping;
   final bool delivered;
+  final bool isPaid;
 
   Order({
     required this.id,
@@ -25,6 +28,7 @@ class Order {
     required this.locality,
     required this.phoneNumber,
     required this.productName,
+    required this.productId,
     required this.productPrice,
     required this.quantity,
     required this.category,
@@ -32,7 +36,9 @@ class Order {
     required this.buyerId,
     required this.vendorId,
     required this.processing,
-    required this.delivered
+    required this.shipping,
+    required this.delivered,
+    required this.isPaid,
   });
 
   Map<String, dynamic> toMap() {
@@ -43,6 +49,7 @@ class Order {
       'city': city,
       'locality': locality,
       'phoneNumber': phoneNumber,
+      'productId': productId,
       'productName': productName,
       'productPrice': productPrice,
       'quantity': quantity,
@@ -51,7 +58,9 @@ class Order {
       'buyerId': buyerId,
       'vendorId': vendorId,
       'processing': processing,
-      'delivered': delivered
+      'shipping': shipping,
+      'delivered': delivered,
+      'isPaid': isPaid,
     };
   }
 
@@ -59,21 +68,24 @@ class Order {
 
   factory Order.fromJson(Map<String, dynamic> map) {
     return Order(
-      id: map['_id'] as String,
-      fullName: map['fullName'] as String,
-      email: map['email'] as String,
-      city: map['city'] as String,
-      locality: map['locality'] as String,
-      phoneNumber: map['phoneNumber'] as String,
-      productName: map['productName'] as String,
-      productPrice: map['productPrice'] as int,
-      quantity: map['quantity'] as int,
-      category: map['category'] as String,
-      image: map['image'] as String,
-      buyerId: map['buyerId'] as String,
-      vendorId: map['vendorId'] as String,
-      processing: map['processing'] as bool,
-      delivered: map['delivered'] as bool
+      id: map['_id'] as String? ?? '',
+      fullName: map['fullName'] as String? ?? '',
+      email: map['email'] as String? ?? '',
+      city: map['city'] as String? ?? '',
+      locality: map['locality'] as String? ?? '',
+      phoneNumber: map['phoneNumber'] as String? ?? '',
+      productId: map['productId'] as String? ?? '',
+      productName: map['productName'] as String? ?? '',
+      productPrice: map['productPrice'] as int? ?? 0,
+      quantity: map['quantity'] as int? ?? 0,
+      category: map['category'] as String? ?? '',
+      image: map['image'] as String? ?? '',
+      buyerId: map['buyerId'] as String? ?? '',
+      vendorId: map['vendorId'] as String? ?? '',
+      processing: map['processing'] as bool? ?? false,
+      shipping: map['shipping'] as bool? ?? false,
+      delivered: map['delivered'] as bool? ?? false,
+      isPaid: map['isPaid'] as bool? ?? false,
     );
   }
 }
